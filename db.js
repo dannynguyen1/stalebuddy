@@ -1,7 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 
-var RecipeModel = require("./RecipeModel"),
-    IngredientModel = require("./IngredientModel");
+var UserModel = require("./UserModel");
 
 var dbURI = 'mongodb://localhost:27017';
 
@@ -13,16 +12,13 @@ function* connect() {
             })
         });
 
-        module.exports.Recipes = module.exports.db.collection(RecipeModel.name);
-        module.exports.Recipe = RecipeModel.constructor;
-        module.exports.Ingredients = module.exports.db.collection(IngredientModel.name);
-        module.exports.Ingredient = IngredientModel.constructor;
+        module.exports.Users = module.exports.db.collection(UserModel.name);
+        module.exports.User = UserModel.constructor;
     }
 }
 
 function* disconnect() {
-    module.exports.Recipes = null;
-    module.exports.Ingredients = null;
+    module.exports.Users = null;
     module.exports.db = yield [gracefulShutdown, function(){}];
 }
 
@@ -55,7 +51,7 @@ process.on('SIGINT', function() {
 
 // Listen for SIGTERM emitted
 process.on('SIGTERM', function() {
-    gracefulShutdown('Heroku app shutdown', function() {
+    gracefulShutdown('app shutdown', function() {
         process.exit(0);
     });
 });

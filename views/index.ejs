@@ -11,6 +11,7 @@
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="/javascripts/home.js"></script>
    <link rel="stylesheet" href="/stylesheets/bootstrap_style.css" />
 </head>
 
@@ -43,8 +44,8 @@
          <div class="input-group">
             <!--            <input type="email" class="form-control" size="50" placeholder="Email Address" required>-->
             <div class="input-group-btn">
-               <button onclick="window.location='http://localhost:3000/Login';" type="button" id="login_button" class="btn btn-danger">Login</button>
-               <button type="button" id="register_button" class="btn btn-danger">Register</button>
+               <a href="/Login"><button type="button" id="login_button" class="btn btn-danger">Login</button></a>
+               <a href="/register"><button type="button" id="register_button" class="btn btn-danger"> Register</button></a>
             </div>
          </div>
       </form>
