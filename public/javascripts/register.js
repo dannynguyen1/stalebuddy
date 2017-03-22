@@ -2,16 +2,18 @@ $(document).ready(function() {
     $("#submit").click(function() {
         if ($("#email").val() == ""
             || $("#password").val() == ""
-            || $("#confirm_email").val() != ("#email").val()
-            || $("#confirm_password").val() != ("#password").val()){
-            alert("Please fill out a valid email and password.");
+            || $("#name").val() == ""
+            || $("#phone_number").val() == ""){
+            alert("Please fill out all form items.");
         }else {
             $.ajax({
                 type: "POST",
                 url: "/register",
                 data: {
+                    name: $("#name").val(),
+                    phone: $("#phone_number").val(),
                     email: $("#email").val(),
-                    password: $("#password").val(),
+                    password: $("#password").val()
                 },
                 success: function(data) {
                     window.location = "/account";

@@ -11,6 +11,7 @@
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="/javascripts/register.js"></script>
    <link rel="stylesheet" href="/stylesheets/bootstrap_style.css" />
 </head>
 
@@ -26,27 +27,27 @@
          <div class="col-md-6 col-md-push-3">
             <form class="form-horizontal">
                <div class="form-group">
-                  <label class="control-label col-sm-6" for="email">Enter a Valid Email:</label>
+                  <label class="control-label col-sm-6" for="name">Name:</label>
+                  <div class="col-sm-6">
+                     <input type="text" class="form-control" name="name" id="name" placeholder="Your name">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="control-label col-sm-6" for="email">Email:</label>
                   <div class="col-sm-6">
                      <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                   </div>
                </div>
                <div class="form-group">
-                  <label class="control-label col-sm-6" for="confirm_email">Confirm Email:</label>
+                  <label class="control-label col-sm-6" for="phone_number">Phone Number:</label>
                   <div class="col-sm-6">
-                     <input type="email" class="form-control" name="confirm_email" id="confirm_email" placeholder="Email">
+                     <input type="phone" class="form-control" name="phone_number" id="phone_number" placeholder="(xxx)-xxx-xxxx">
                   </div>
                </div>
                <div class="form-group">
                   <label class="control-label col-sm-6" for="password">Create a Password:</label>
                   <div class="col-sm-6">
                      <input type="password" class="form-control" name="password" id="password" placeholder="********">
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label class="control-label col-sm-6" for="confirm_password">Confirm Password:</label>
-                  <div class="col-sm-6">
-                     <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="********">
                   </div>
                </div>
                <div class="col-sm-1 col-sm-push-5">
