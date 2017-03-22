@@ -9,6 +9,10 @@ router.get('/', function(req, res, next) {
     res.render('index');
 });
 
+router.get('/dashboard', function(req, res, next) {
+    res.render('dashboard');
+});
+
 router.get('/logout', function(req, res, next) {
     res.cookie('accountnum', "-1", {
         maxAge: 900000,
