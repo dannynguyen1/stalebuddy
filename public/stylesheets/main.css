@@ -306,6 +306,14 @@ body #cdawrap a:hover.carbon-poweredby {
 .addItem {
 	display: none;
 	padding-top: 100px;
-    margin-left: 350px;
     color: white;
+}
+
+.container {
+	width: 100vw !important;
+    padding-left: 300px !important;
+}
+
+.juiceImage {
+	display: none;
 }

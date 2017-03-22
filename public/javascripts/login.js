@@ -11,7 +11,7 @@ $(document).ready(function() {
                     password: $("#password").val()
                 },
                 success: function(data) {
-                    window.location = "/account";
+                    window.location = "/dashboard";
                 },
                 error: function(data) {
                     alert("Invalid password. Please try again.");
