@@ -52,7 +52,7 @@ router.post("/login", function(req, res, next) {
 router.post("/register", function(req, res, next) {
     Promise.coroutine(function*() {
         yield db.connect();
-        (yield(cb) => {
+        var u = (yield(cb) => {
             db.Users.insert({
                 "name": req.body.name,
                 "email": req.body.email,
@@ -60,11 +60,21 @@ router.post("/register", function(req, res, next) {
                 "password": req.body.password,
                 "grocery_list": [],
                 "recipes": []
-            });
+            }, cb);
         });
+        var user = yield db.Users.find({
+            "email": req.body.email,
+            "password": req.body.password
+        }).toArray();
+        if (user.length > 0) {
+            res.cookie('accountnum', user[0]._id, {
+                maxAge: 900000,
+                httpOnly: true
+            });
+            res.end("OK");
+        }
     })();
     sendTextForRegistering(req.body.name, req.body.phone);
-    res.end("OK");
 });
 router.post("/addItem", function(req, res, next) {
     Promise.coroutine(function*() {
