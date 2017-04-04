@@ -18,10 +18,6 @@ var fs = require("fs");
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.use(function(req, res, next) {
-    var reqType = req.headers["x-forwarded-proto"];
-    reqType == 'https' ? next() : res.redirect("https://" + req.headers.host + req.url);
-});
 
 /**
  * Create HTTP server.
