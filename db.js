@@ -2,7 +2,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 var UserModel = require("./UserModel");
 
-var dbURI = 'mongodb://localhost:27017';
+var dbURI = 'mongodb://heroku_7gm60qtg:nshb57r01f0il4niv9k6c89uom@ds155150.mlab.com:55150/heroku_7gm60qtg';
 
 function* connect() {
     if (!module.exports.db) {
