@@ -18,11 +18,20 @@ router.get('/logout', function(req, res, next) {
 });
 router.get('/dashboard', function(req, res, next) {
     if (req.cookies.accountnum != null && req.cookies.accountnum != "") {
-        res.render('dashboard', {
-            title: 'Express'
-        });
+        Promise.coroutine(function*() {
+            yield db.connect();
+            //  Get current user with the id equal to the cookie accountNum
+            var user = (yield(cb) => {
+                db.Users.find({
+                    _id: ObjectId(req.cookies.accountnum)
+                }).toArray(cb);
+            })[0];
+            res.render('dashboard', {
+                grocery_list: user.grocery_list
+            });
+        })();
     } else {
-        res.end("You're not logged in.");
+        res.redirect("/login");
     }
 });
 router.get('/register', function(req, res, next) {
@@ -31,6 +40,10 @@ router.get('/register', function(req, res, next) {
 router.get('/Login', function(req, res, next) {
     res.render('Login');
 });
+router.get('/table', function(req, res, next) {
+    res.render('table');
+});
+
 router.post("/login", function(req, res, next) {
     Promise.coroutine(function*() {
         yield db.connect();

@@ -227,11 +227,10 @@ a:hover {
 .content {
 	position: relative;
 	min-height: 300px;
-	margin: 0 0 0 300px;
 }
 
 .content--loading {
-	background: url(../img/loading.svg) no-repeat 50% 50%;
+	background: url(../images/loading.svg) no-repeat 50% 50%;
 }
 
 .products {
@@ -304,7 +303,6 @@ body #cdawrap a:hover.carbon-poweredby {
 }
 
 .addItem {
-	display: none;
 	padding-top: 100px;
     color: white;
 }
@@ -315,5 +313,13 @@ body #cdawrap a:hover.carbon-poweredby {
 }
 
 .juiceImage {
+	display: none;
+}
+
+#partial_table {
+	display: none;
+}
+
+#partial_add {
 	display: none;
 }

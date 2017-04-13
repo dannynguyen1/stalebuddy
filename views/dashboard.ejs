@@ -5,8 +5,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>StaleBuddy</title>
-		<meta name="description" content="Blueprint: A basic template for a responsive multi-level menu" />
-		<meta name="keywords" content="blueprint, template, html, css, menu, responsive, mobile-friendly" />
 		<meta name="author" content="Danny Nguyen" />
 		<link rel="shortcut icon" href="favicon.ico">
 		<!-- food icons -->
@@ -16,11 +14,11 @@
 		<!-- menu styles -->
 		<link rel="stylesheet" type="text/css" href="/stylesheets/component.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="/javascripts/modernizr-custom.js"></script>
 		<script src="/javascripts/dashboard.js"></script>
 		<script src="/javascripts/quagga.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<!-- Main container -->
@@ -37,6 +35,7 @@
 				<button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
 				<div class="menu__wrap">
 					<ul data-menu="main" class="menu__level" tabindex="-1" role="menu" aria-label="All">
+						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-0" aria-owns="submenu-0" href="#">Home</a></li>
 						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-1" aria-owns="submenu-1" href="#">Groceries List</a></li>
 						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-2" aria-owns="submenu-2" href="#">Logbook</a></li>
 						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-3" aria-owns="submenu-3" href="#">Recipes</a></li>
@@ -52,48 +51,16 @@
 			</nav>
 			<div class="content">
 				<p class="info">Please choose a category</p>
-				<!-- Ajax loaded content here -->
 			</div>
-			<div class="text-center addItem">
-				<div class="alert alert-success hidden" role="alert">
-					<strong>Nice!</strong> The item was added to your grocery list.
-				</div>
-				<div class="juiceImage">
-					<img height="200px" src=""/>
-				</div>
-				<h1 class="text-center">Add a grocery item</h1>
-				<br/>
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label class="control-label col-sm-5" for="Product">Product Name:</label>
-						<div class="col-sm-3">
-							<input type="product" id="product" class="form-control" placeholder="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-5" for="expiration_date">Expiration Date:</label>
-						<div class="col-sm-3">
-							<input type="expiration" id="expiration" class="form-control" placeholder="">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-5" for="Comments">Use by (optional):</label>
-						<div class="col-sm-3">
-							<input type="comments" id="comments" class="form-control" placeholder="">
-						</div>
-					</div>
-					<div class="col-sm-12">
-					<button type="button" id="add_button" class="btn btn-success">Add Item</button>
-					<button id="scanItem" class="scanItem btn btn-success" type="button"><i class="glyphicon glyphicon-camera"></i> &nbsp; Scan Item</button>
-					</div>
-					<br/><br/><br/>
-					<div id="camera"></div>
-				</form>
+			<div id="partial_table">
+				<%- include partials/table.ejs %>
+			</div>
+			<div id="partial_add">
+				<%- include partials/add.ejs %>
 			</div>
 		</div>
 		<!-- /view -->
 		<script src="/javascripts/classie.js"></script>
-		<script src="/javascripts/dummydata.js"></script>
 		<script src="/javascripts/main.js"></script>
 		<script>
 		(function() {
@@ -103,7 +70,7 @@
 					// initialBreadcrumb : 'all', // initial breadcrumb text
 					backCtrl : false, // show back button
 					// itemsDelayInterval : 60, // delay between each menu item sliding animation
-					onItemClick: loadDummyData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
+					onItemClick: loadData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
 				});
 			// mobile menu toggle
 			var openMenuCtrl = document.querySelector('.action--open'),
@@ -118,7 +85,7 @@
 				classie.remove(menuEl, 'menu--open');
 				openMenuCtrl.focus();
 			}
-			function loadDummyData(ev, itemName) {
+			function loadData(ev, itemName) {
 				var gridWrapper = document.querySelector('.content');
 				ev.preventDefault();
 				closeMenu();
@@ -126,17 +93,18 @@
 				classie.add(gridWrapper, 'content--loading');
 				setTimeout(function() {
 					classie.remove(gridWrapper, 'content--loading');
-					if(itemName == "Add Item") {
-						$(".content").hide();
-						$(".addItem").show();
-					} else {
-						$(".content").show();
-						$(".addItem").hide();
-					}
-					gridWrapper.innerHTML = '<ul class="products">' + dummyData[itemName] + '<ul>';
+						if(itemName == "Home") {
+							$(".content").hide();
+							$("#partial_table").show();
+							$("#partial_add").hide();
+						} else if(itemName == "Add Item") {
+							$(".content").hide();
+							$("#partial_table").hide();
+							$("#partial_add").show();
+						}
 					}, 700);
-				}
-			})();
-			</script>
-		</body>
-	</html>
+			}
+		})();
+		</script>
+	</body>
+</html>
