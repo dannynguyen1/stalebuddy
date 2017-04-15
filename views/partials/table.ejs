@@ -1,0 +1,26 @@
+<style>
+   #ItemTable {
+      background-color: transparent;
+   }
+</style>
+<table id="ItemTable" class="table table-inverse">
+   <thead id="ItemTableHead">
+      <tr>
+         <th>Product</th>
+         <th>Expiration Date</th>
+         <th>Comments</th>
+         <th>Price</th>
+      </tr>
+   </thead>
+   <tbody id="ItemTableBody">
+      <% grocery_list.forEach(function(item) { %>
+         <tr class="item">
+            <td><%= item.product %></td>
+            <td><%= item.expiration %></td>
+            <td><%= item.comments %></td>
+            <td>$<%= item.price %></td>
+            <td><input type="checkbox" name="record_delete"></td>
+         </tr>
+      <% }); %>
+   </tbody>
+</table>

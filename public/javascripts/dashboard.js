@@ -11,13 +11,11 @@ $(document).ready(function() {
                 data: {
                     product: $("#product").val(),
                     expiration: $("#expiration").val(),
-                    comments: $("#comments").val()
+                    comments: $("#comments").val(),
+                    price: $("#price").val()
                 },
                 success: function(data) {
-                    $(".alert").removeClass("hidden");
-                    $("#product").val("");
-                    $("#expiration").val("");
-                    $("#comments").val("");
+                    location.reload();
                 },
                 error: function(data) {
                     alert("Invalid data. Please try again.");
