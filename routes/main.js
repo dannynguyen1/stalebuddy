@@ -5,7 +5,6 @@ var Promise = require('bluebird-co');
 var ObjectId = require('mongodb').ObjectID;
 var walmart = require('walmart')("pjsxwgy68ucqd6cwt9rcf2ab");
 
-
 var twilio = require('twilio')('AC0293b062c11a10845b444e53c171e300', 'd171fda81556464fc5bff4007799af13');
 router.get('/', function(req, res, next) {
     res.render('index');

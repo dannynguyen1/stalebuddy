@@ -24,3 +24,23 @@
       <% }); %>
    </tbody>
 </table>
+<div>
+<input type="button" id="delete_button" class="btn btn-success" value="Delete Rows">
+</div>
+
+<script>
+   $(document).ready(function checkValid() {
+
+   $("#delete_button").click(function () {
+      deleteRows();
+   });
+});
+   
+   function deleteRows() {
+   $("#ItemTableBody").find('input[name="record_delete"]').each(function () {
+      if ($(this).is(":checked")) {
+         $(this).parents("tr").remove();
+      }
+   });
+};
+</script>
