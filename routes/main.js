@@ -71,7 +71,8 @@ router.post("/register", function(req, res, next) {
                 "phone": req.body.phone,
                 "password": req.body.password,
                 "grocery_list": [],
-                "recipes": []
+                "recipes": [],
+               "log_book": []
             }, cb);
         });
         var user = yield db.Users.find({
