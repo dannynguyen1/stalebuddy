@@ -99,13 +99,37 @@ router.post("/addItem", function(req, res, next) {
             }).toArray(cb);
         })[0];
         //  Add the item to the variable above.
-        console.log(user);
+        //console.log(user);
         user.grocery_list.push(req.body);
+       console.log(user);
         //  Re-store that variable back in the database.
         yield(cb) => {
             db.Users.update({
                 _id: ObjectId(req.cookies.accountnum)
             }, user, cb);
+        };
+    })();
+    res.end("OK");
+});
+
+router.delete("/deleteItem", function(req, res, next) {
+    Promise.coroutine(function*() {
+        yield db.connect();
+        console.log(req.cookies.accountnum);
+        //  Get current user with the id equal to the cookie accountNum
+        var user = (yield(cb) => {
+            db.Users.find({
+                _id: ObjectId(req.cookies.accountnum)
+            }).toArray(cb);
+        })[0];
+        //  Add the item to the variable above.
+        console.log(user);
+       //user.grocery_list.splice(1, 1);
+        //  Re-store that variable back in the database.
+        yield(cb) => {
+            db.Users.update({
+                _id: ObjectId(req.cookies.accountnum)
+            }, {$pull: {"grocery_list" : {"product": req.body.product, "expiration": req.body.expiration, "comments": req.body.comments, "price": req.body.price}}}, false, false);
         };
     })();
     res.end("OK");

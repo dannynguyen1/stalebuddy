@@ -3,6 +3,7 @@
       background-color: transparent;
    }
 </style>
+<script src="https://use.fontawesome.com/1b82322039.js"></script>
 <table id="ItemTable" class="table table-inverse">
    <thead id="ItemTableHead">
       <tr>
@@ -19,28 +20,72 @@
             <td><%= item.expiration %></td>
             <td><%= item.comments %></td>
             <td>$<%= item.price %></td>
-            <td><input type="checkbox" name="record_delete"></td>
+            <td><a href="#" data-id="@item.Id" class="linkdelete"><i class="fa fa-trash-o"></i></a></td>
          </tr>
       <% }); %>
    </tbody>
 </table>
-<div>
-<input type="button" id="delete_button" class="btn btn-success" value="Delete Rows">
-</div>
 
 <script>
    $(document).ready(function checkValid() {
 
-   $("#delete_button").click(function () {
-      deleteRows();
+      /*var row_number = 0;
+      var rowstring;
+
+      $("tr").each(function() {
+         rowstring = row_number.toString();
+         $(this).attr('id', rowstring);
+         row_number = row_number + 1;
+         //alert("id is " + $(this).attr('id') + "while rowstring is " + rowstring);
+      });
+      alert("Number of rows: " + (row_number-1));*/
+
+      
+
+      $(".linkdelete").click(function() {
+         //alert("Button clicked!");
+          var tr = $(this).closest('tr');
+         //var id = tr.attr('id'); // get id of data using this
+         var name = tr.children().eq(0); //this assigns the value of each child to a variable
+         var name_value = name.html(); //this changes the variable from an object to a string, which is what we need.
+         var date = tr.children().eq(1);
+         var date_value = date.html();
+         var comment = tr.children().eq(2);
+         var comment_value = comment.html();
+         var price = tr.children().eq(3);
+         var price_value = price.html();
+         price_value = price_value.substr(1); //This is to remove the leading $ from the string.
+         /*alert("Id is: " + id);
+         alert("Name is " + name_value);
+         alert("Date is " + date_value);
+         alert("Comment is " + comment_value);
+         alert("Price is " + price_value);*/
+         $.ajax({
+            url: "/deleteItem",
+            /*cache: false,
+            contentType: false,
+            processData: false,
+            mimeType: "multipart/form-data",*/
+            type: "DELETE",
+            data: {
+               product: name_value,
+               expiration: date_value,
+               comments: comment_value,
+               price: price_value
+            },
+            dataType: "JSON",
+            success: function() {
+               if (data.Success) {
+                  tr.remove(); // You can remove row like this
+               }
+               eval(data.Script);
+               //alert("Success!");
+            },
+            error: function() {
+               //alert("Error!");
+               alert("Item Deleted, Please Reload to see changes.");
+            }
+         });
+      });
    });
-});
-   
-   function deleteRows() {
-   $("#ItemTableBody").find('input[name="record_delete"]').each(function () {
-      if ($(this).is(":checked")) {
-         $(this).parents("tr").remove();
-      }
-   });
-};
 </script>

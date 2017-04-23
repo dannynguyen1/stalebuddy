@@ -117,7 +117,7 @@
 					if (submenus[pos]) {
 						submenus[pos].push(pushMe);
 					} else {
-						submenus[pos] = []
+						submenus[pos] = [];
 						submenus[pos].push(pushMe);
 					}
 				}
@@ -380,7 +380,7 @@
 		}
 		// create breadcrumb
 		this._addBreadcrumb(currentMenu);
-	}
+	};
 
 	window.MLMenu = MLMenu;
 
