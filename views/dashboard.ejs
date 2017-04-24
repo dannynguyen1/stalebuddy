@@ -1,110 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>StaleBuddy</title>
-		<meta name="author" content="Danny Nguyen" />
-		<link rel="shortcut icon" href="favicon.ico">
-		<!-- food icons -->
-		<link rel="stylesheet" type="text/css" href="/stylesheets/organicfoodicons.css" />
-		<!-- demo styles -->
-		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
-		<!-- menu styles -->
-		<link rel="stylesheet" type="text/css" href="/stylesheets/component.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="/javascripts/modernizr-custom.js"></script>
-		<script src="/javascripts/dashboard.js"></script>
-		<script src="/javascripts/quagga.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-		<!-- Main container -->
-		<div class="container">
-			<!-- Blueprint header -->
-			<header class="bp-header cf">
-				<div class="dummy-logo">
-					<div class="dummy-icon foodicon foodicon--coconut"></div>
-					<h2 class="dummy-heading">StaleBuddy</h2>
-				</div>
-			</header>
-			<button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
-			<nav id="ml-menu" class="menu">
-				<button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
-				<div class="menu__wrap">
-					<ul data-menu="main" class="menu__level" tabindex="-1" role="menu" aria-label="All">
-						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-0" aria-owns="submenu-0" href="#">Home</a></li>
-						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-1" aria-owns="submenu-1" href="#">Groceries List</a></li>
-						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-2" aria-owns="submenu-2" href="#">Logbook</a></li>
-						<li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-3" aria-owns="submenu-3" href="#">Recipes</a></li>
-					</ul>
-					<!-- Submenu 1 -->
-					<ul data-menu="submenu-1" id="submenu-1" class="menu__level" tabindex="-1" role="menu" aria-label="Vegetables">
-						<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Add Item</a></li>
-						<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Dairy</a></li>
-						<li class="menu__item" role="menuitem"><a class="menu__link" href="#">Meats</a></li>
-                       <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Produce</a></li>
-					</ul>
-				</div>
-			</nav>
-			<div class="content">
-				<p class="info">Please choose a category</p>
-			</div>
-			<div id="partial_table">
-				<%- include partials/table.ejs %>
-			</div>
-			<div id="partial_add">
-				<%- include partials/add.ejs %>
-			</div>
-		</div>
-		<!-- /view -->
-		<script src="/javascripts/classie.js"></script>
-		<script src="/javascripts/main.js"></script>
-		<script>
-		(function() {
-			var menuEl = document.getElementById('ml-menu'),
-				mlmenu = new MLMenu(menuEl, {
-					// breadcrumbsCtrl : true, // show breadcrumbs
-					// initialBreadcrumb : 'all', // initial breadcrumb text
-					backCtrl : false, // show back button
-					// itemsDelayInterval : 60, // delay between each menu item sliding animation
-					onItemClick: loadData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
-				});
-			// mobile menu toggle
-			var openMenuCtrl = document.querySelector('.action--open'),
-				closeMenuCtrl = document.querySelector('.action--close');
-			openMenuCtrl.addEventListener('click', openMenu);
-			closeMenuCtrl.addEventListener('click', closeMenu);
-			function openMenu() {
-				classie.add(menuEl, 'menu--open');
-				closeMenuCtrl.focus();
-			}
-			function closeMenu() {
-				classie.remove(menuEl, 'menu--open');
-				openMenuCtrl.focus();
-			}
-			function loadData(ev, itemName) {
-				var gridWrapper = document.querySelector('.content');
-				ev.preventDefault();
-				closeMenu();
-				gridWrapper.innerHTML = '';
-				classie.add(gridWrapper, 'content--loading');
-				setTimeout(function() {
-					classie.remove(gridWrapper, 'content--loading');
-						if(itemName == "Home") {
-							$(".content").hide();
-							$("#partial_table").show();
-							$("#partial_add").hide();
-						} else if(itemName == "Add Item") {
-							$(".content").hide();
-							$("#partial_table").hide();
-							$("#partial_add").show();
-						}
-					}, 700);
-			}
-		})();
-		</script>
-	</body>
+
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>StaleBuddy</title>
+   <meta name="author" content="Danny Nguyen" />
+   <link rel="shortcut icon" href="favicon.ico">
+   <!-- food icons -->
+   <link rel="stylesheet" type="text/css" href="/stylesheets/organicfoodicons.css" />
+   <!-- demo styles -->
+   <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+   <!-- menu styles -->
+   <link rel="stylesheet" type="text/css" href="/stylesheets/component.css" />
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="/javascripts/modernizr-custom.js"></script>
+   <script src="/javascripts/dashboard.js"></script>
+   <script src="/javascripts/quagga.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+   <!-- Main container -->
+   <div class="container">
+      <!-- Blueprint header -->
+      <header class="bp-header cf">
+         <div class="dummy-logo">
+            <div class="dummy-icon foodicon foodicon--coconut"></div>
+            <h2 class="dummy-heading">StaleBuddy</h2>
+         </div>
+      </header>
+      <button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
+      <nav id="ml-menu" class="menu">
+         <button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
+         <div class="menu__wrap">
+            <ul data-menu="main" class="menu__level" tabindex="-1" role="menu" aria-label="All">
+               <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-0" aria-owns="submenu-0" href="#">Home</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-1" aria-owns="submenu-1" href="#">Groceries List</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-2" aria-owns="submenu-2" href="#">Logbook</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-3" aria-owns="submenu-3" href="#">Recipes</a></li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" id="submenu-1" class="menu__level" tabindex="-1" role="menu" aria-label="Vegetables">
+               <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Add Item</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Dairy</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Meats</a></li>
+               <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Produce</a></li>
+            </ul>
+         </div>
+      </nav>
+      <div class="content">
+         <p class="info">Please choose a category</p>
+      </div>
+      <div id="partial_table">
+         <%- include partials/table.ejs %>
+      </div>
+      <div id="partial_add">
+         <%- include partials/add.ejs %>
+      </div>
+      <div id="partial_logbook">
+         <%- include partials/logbook.ejs %>
+      </div>
+   </div>
+   <!-- /view -->
+   <script src="/javascripts/classie.js"></script>
+   <script src="/javascripts/main.js"></script>
+   <script>
+      $("#partial_logbook").hide(); //Brute Force fix to prevent LogBook from showing up when it shouldn't.
+
+   </script>
+   <script>
+      (function() {
+         var menuEl = document.getElementById('ml-menu'),
+            mlmenu = new MLMenu(menuEl, {
+               // breadcrumbsCtrl : true, // show breadcrumbs
+               // initialBreadcrumb : 'all', // initial breadcrumb text
+               backCtrl: false, // show back button
+               // itemsDelayInterval : 60, // delay between each menu item sliding animation
+               onItemClick: loadData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
+            });
+         // mobile menu toggle
+         var openMenuCtrl = document.querySelector('.action--open'),
+            closeMenuCtrl = document.querySelector('.action--close');
+         openMenuCtrl.addEventListener('click', openMenu);
+         closeMenuCtrl.addEventListener('click', closeMenu);
+
+         function openMenu() {
+            classie.add(menuEl, 'menu--open');
+            closeMenuCtrl.focus();
+         }
+
+         function closeMenu() {
+            classie.remove(menuEl, 'menu--open');
+            openMenuCtrl.focus();
+         }
+
+         function loadData(ev, itemName) {
+            var gridWrapper = document.querySelector('.content');
+            ev.preventDefault();
+            closeMenu();
+            gridWrapper.innerHTML = '';
+            classie.add(gridWrapper, 'content--loading');
+            setTimeout(function() {
+               classie.remove(gridWrapper, 'content--loading');
+               if (itemName == "Home") {
+                  $(".content").hide();
+                  $("#partial_table").show();
+                  $("#partial_add").hide();
+                  $("#partial_logbook").hide();
+               } else if (itemName == "Add Item") {
+                  $(".content").hide();
+                  $("#partial_table").hide();
+                  $("#partial_add").show();
+                  $("#partial_logbook").hide();
+               } else if (itemName == "Logbook") {
+                  $(".content").hide();
+                  $("#partial_table").hide();
+                  $("#partial_add").hide();
+                  $("#partial_logbook").show();
+               }
+            }, 700);
+         }
+      })();
+
+   </script>
+</body>
+
 </html>
