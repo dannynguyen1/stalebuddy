@@ -47,8 +47,9 @@
 
       cost = getCost();
 
-      $("#LogBook").before("<div id='cost'><h4>Total Cost: $" + cost.toFixed(2) + "</h4></div>");
+      $("#LogBook").before("<div id='cost'><h4>Total Cost: <span id='number_price'>$" + cost.toFixed(2) + "<span></h4></div>");
       $("#cost").css("color", "white");
+      $("#number_price").css("color", "#29a468");
    });
 
    function getCost() {
