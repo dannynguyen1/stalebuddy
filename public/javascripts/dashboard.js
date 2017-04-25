@@ -2,7 +2,7 @@ $(document).ready(function(e) {
     $("#add_button").click(function() {
         if ($("#product").val() == "" ||
             $("#expiration").val() == "" ||
-            $("#comments").val() == "") {
+            $("#price").val() == "") {
             alert("Please fill out all form items.");
         } else {
             $.ajax({
@@ -15,14 +15,13 @@ $(document).ready(function(e) {
                     price: $("#price").val()
                 },
                 success: function(data) {
-                    location.reload();
+                    location.reload(true);
                 },
                 error: function(data) {
                     alert("Invalid data. Please try again.");
                 }
             });
         }
-       e.stopImmediatePropagation(); //Stops ajax from calling twice.
     });
 
     $("#scanItem").click(function() {
@@ -72,6 +71,8 @@ $(document).ready(function(e) {
                         $(".alert").text(data.product.productName + " was added!");
                         $(".juiceImage").show("slow");
                         $(".juiceImage img").prop("src", data.product.primaryImageUrl);
+                        $("#product").val(data.product.productName);
+                        $("#comments").val(data.product.longDescription);
                     },
                     error: function(data) {
                         alert("Invalid data. Please try again.");

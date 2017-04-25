@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $("#login_button").click(function() {
         if ($("#email").val() == "" || $("#password").val() == "") {
-            alert("Please fill out a valid email and password.");
+             alert("Please fill out a valid email and password.");
         } else {
             $.ajax({
                 type: "POST",
