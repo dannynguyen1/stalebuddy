@@ -15,14 +15,13 @@ $(document).ready(function(e) {
                     price: $("#price").val()
                 },
                 success: function(data) {
-                    location.reload();
+                    location.reload(true);
                 },
                 error: function(data) {
                     alert("Invalid data. Please try again.");
                 }
             });
         }
-       e.stopImmediatePropagation(); //Stops ajax from calling twice.
     });
 
     $("#scanItem").click(function() {

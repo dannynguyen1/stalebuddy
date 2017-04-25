@@ -316,7 +316,11 @@ body #cdawrap a:hover.carbon-poweredby {
 	display: none;
 }
 
-#partial_table {
+/*#partial_table {
+	display: none;
+}*/
+
+.content {
 	display: none;
 }
 

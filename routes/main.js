@@ -25,14 +25,23 @@ router.get('/dashboard', function(req, res, next) {
                     _id: ObjectId(req.cookies.accountnum)
                 }).toArray(cb);
             })[0];
+
+            var totalPrice = 0;
+            for(var i = 0; i < user.grocery_list.length; i++) {
+                totalPrice += Number(user.grocery_list[i].price);
+            }
+
+            console.log("Total price updated to " + totalPrice);
             res.render('dashboard', {
-                grocery_list: user.grocery_list
+                grocery_list: user.grocery_list,
+                totalPrice: totalPrice
             });
         })();
     } else {
         res.redirect("/login");
     }
 });
+
 router.get('/register', function(req, res, next) {
     res.render('register');
 });
@@ -41,6 +50,22 @@ router.get('/Login', function(req, res, next) {
 });
 router.get('/table', function(req, res, next) {
     res.render('table');
+});
+
+//  Only for dev purposes!
+router.get('/clearAll', function(req, res, next) {
+    Promise.coroutine(function*() {
+        yield db.connect();
+        var result = yield(cb) => {
+            db.Users.remove({}, cb);
+        };
+        console.log(result);
+        res.cookie('accountnum', "-1", {
+            maxAge: 900000,
+            httpOnly: true
+        });
+        res.redirect("/");
+    })();
 });
 
 router.post("/login", function(req, res, next) {
@@ -64,6 +89,16 @@ router.post("/login", function(req, res, next) {
 router.post("/register", function(req, res, next) {
     Promise.coroutine(function*() {
         yield db.connect();
+        var existing_user = yield db.Users.find({
+            "email": req.body.email,
+            "password": req.body.password
+        }).toArray();
+
+        if(existing_user && existing_user.length > 0) {
+            res.end("OK");
+            return;
+        }
+
         var u = (yield(cb) => {
             db.Users.insert({
                 "name": req.body.name,
@@ -92,7 +127,6 @@ router.post("/register", function(req, res, next) {
 router.post("/addItem", function(req, res, next) {
     Promise.coroutine(function*() {
         yield db.connect();
-        console.log(req.cookies.accountnum);
         //  Get current user with the id equal to the cookie accountNum
         var user = (yield(cb) => {
             db.Users.find({
@@ -115,32 +149,32 @@ router.post("/addItem", function(req, res, next) {
                     _id: ObjectId(req.cookies.accountnum)
                 }, user, cb);
             };
+            res.end("OK");
         }
     })();
-    res.end("OK");
 });
 
-router.delete("/deleteItem", function(req, res, next) {
+router.get("/delete/:id", function(req, res, next) {
+    var grocery_id = req.params.id;
     Promise.coroutine(function*() {
         yield db.connect();
-        console.log(req.cookies.accountnum);
         //  Get current user with the id equal to the cookie accountNum
         var user = (yield(cb) => {
             db.Users.find({
                 _id: ObjectId(req.cookies.accountnum)
             }).toArray(cb);
         })[0];
-        //  Add the item to the variable above.
-        console.log(user);
-       //user.grocery_list.splice(1, 1);
+        
+        user.grocery_list.splice(grocery_id, 1);
+
         //  Re-store that variable back in the database.
         yield(cb) => {
             db.Users.update({
                 _id: ObjectId(req.cookies.accountnum)
-            }, {$pull: {"grocery_list" : {"product": req.body.product, "expiration": req.body.expiration, "comments": req.body.comments, "price": req.body.price}}}, false, false);
+            }, user, cb);
         };
+        res.redirect("/dashboard");
     })();
-    res.end("OK");
 });
 
 router.post("/lookupItem", function(req, res, next) {
