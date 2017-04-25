@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#add_button").click(function() {
         if ($("#product").val() == "" ||
             $("#expiration").val() == "" ||
-            $("#comments").val() == "") {
+            $("#price").val() == "") {
             alert("Please fill out all form items.");
         } else {
             $.ajax({

@@ -21,8 +21,10 @@ body {
       }
       
       .jumbotron {
-         background-color: #f4511e;
+         background-color: #373a3c;
          color: #fff;
+         margin-bottom: 20px;
+
          padding: 100px 25px;
          font-family: Montserrat, sans-serif;
       }
@@ -41,7 +43,7 @@ body {
       }
       
       .logo {
-         color: #f4511e;
+         color: #5cb85c;
          font-size: 200px;
       }
       
@@ -131,7 +133,7 @@ body {
       
       .navbar {
          margin-bottom: 0;
-         background-color: #f4511e;
+         background-color: #2a2b30;
          z-index: 9999;
          border: 0;
          font-size: 12px !important;

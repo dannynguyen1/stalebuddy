@@ -99,15 +99,23 @@ router.post("/addItem", function(req, res, next) {
                 _id: ObjectId(req.cookies.accountnum)
             }).toArray(cb);
         })[0];
-        //  Add the item to the variable above.
-        console.log(user);
-        user.grocery_list.push(req.body);
-        //  Re-store that variable back in the database.
-        yield(cb) => {
-            db.Users.update({
-                _id: ObjectId(req.cookies.accountnum)
-            }, user, cb);
-        };
+        var exists = false;
+        for(var i = 0; i < user.grocery_list.length; i++) {
+            if(JSON.stringify(user.grocery_list[i]) === JSON.stringify(req.body)) {
+                exists = true;
+                break;
+            }
+        }
+        if(!exists) {
+            //  Add the item to the variable above.
+            user.grocery_list.push(req.body);
+            //  Re-store that variable back in the database.
+            yield(cb) => {
+                db.Users.update({
+                    _id: ObjectId(req.cookies.accountnum)
+                }, user, cb);
+            };
+        }
     })();
     res.end("OK");
 });
