@@ -71,6 +71,8 @@ $(document).ready(function(e) {
                         $(".alert").text(data.product.productName + " was added!");
                         $(".juiceImage").show("slow");
                         $(".juiceImage img").prop("src", data.product.primaryImageUrl);
+                        $("#product").val(data.product.productName);
+                        $("#comments").val(data.product.longDescription);
                     },
                     error: function(data) {
                         alert("Invalid data. Please try again.");
