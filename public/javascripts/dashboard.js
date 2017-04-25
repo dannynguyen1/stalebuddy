@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function(e) {
     $("#add_button").click(function() {
         if ($("#product").val() == "" ||
             $("#expiration").val() == "" ||
@@ -22,6 +22,7 @@ $(document).ready(function() {
                 }
             });
         }
+       e.stopImmediatePropagation(); //Stops ajax from calling twice.
     });
 
     $("#scanItem").click(function() {

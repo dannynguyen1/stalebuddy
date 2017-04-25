@@ -5,7 +5,6 @@ var Promise = require('bluebird-co');
 var ObjectId = require('mongodb').ObjectID;
 var walmart = require('walmart')("pjsxwgy68ucqd6cwt9rcf2ab");
 
-
 var twilio = require('twilio')('AC0293b062c11a10845b444e53c171e300', 'd171fda81556464fc5bff4007799af13');
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -72,7 +71,8 @@ router.post("/register", function(req, res, next) {
                 "phone": req.body.phone,
                 "password": req.body.password,
                 "grocery_list": [],
-                "recipes": []
+                "recipes": [],
+               "log_book": []
             }, cb);
         });
         var user = yield db.Users.find({
@@ -116,6 +116,29 @@ router.post("/addItem", function(req, res, next) {
                 }, user, cb);
             };
         }
+    })();
+    res.end("OK");
+});
+
+router.delete("/deleteItem", function(req, res, next) {
+    Promise.coroutine(function*() {
+        yield db.connect();
+        console.log(req.cookies.accountnum);
+        //  Get current user with the id equal to the cookie accountNum
+        var user = (yield(cb) => {
+            db.Users.find({
+                _id: ObjectId(req.cookies.accountnum)
+            }).toArray(cb);
+        })[0];
+        //  Add the item to the variable above.
+        console.log(user);
+       //user.grocery_list.splice(1, 1);
+        //  Re-store that variable back in the database.
+        yield(cb) => {
+            db.Users.update({
+                _id: ObjectId(req.cookies.accountnum)
+            }, {$pull: {"grocery_list" : {"product": req.body.product, "expiration": req.body.expiration, "comments": req.body.comments, "price": req.body.price}}}, false, false);
+        };
     })();
     res.end("OK");
 });
