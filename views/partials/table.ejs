@@ -1,21 +1,44 @@
-<style>
-   #ItemTable {
-      background-color: transparent;
-   }
-   
-   h1 {
-      color: white;
-   }
-   
-   h1 span {
-      color: #29a468;
-   }
+<head>
+   <script src="https://use.fontawesome.com/1b82322039.js"></script>
+   <style>
+      #ItemTable {
+         background-color: transparent;
+      }
+      
+      h1 {
+         color: white;
+      }
+      
+      h1 span {
+         color: #29a468;
+      }
 
-</style>
-<script src="https://use.fontawesome.com/1b82322039.js"></script>
+   </style>
+   <style>
+      table.tablesorter thead tr .header {
+        background-image: url(http://i.imgur.com/IqMYvF6.gif);
+         background-repeat: no-repeat;
+         background-position: center right;
+         cursor: pointer;
+      }
+      
+      table.tablesorter thead tr .headerSortUp {
+         background-image: url(http://i.imgur.com/9cg7VQm.gif);
+      }
+      
+      table.tablesorter thead tr .headerSortDown {
+         background-image: url(http://i.imgur.com/CkKL2tz.gif);
+      }
+
+   </style>
+   <!--<link rel="stylesheet" type="text/css" href="../../public/stylesheets/themes/blue/style.css"/>-->
+   <script src="https://use.fontawesome.com/1b82322039.js"></script>
+   <script src="https://cdn.rawgit.com/christianbach/tablesorter/77457630/jquery.tablesorter.js"></script>
+</head>
+
 
 <body>
-   <table id="ItemTable" class="table table-inverse">
+   <table id="ItemTable" class="table table-inverse tablesorter">
       <thead id="ItemTableHead">
          <tr>
             <th id="food_header">Product</th>
@@ -44,15 +67,32 @@
             <% }); %>
       </tbody>
    </table>
-   <!--<h1>Total Price: <span>$<%= totalPrice %></span></h1>-->
+
+   <script>
+      $(document).ready(function() {
+         $("#ItemTable").tablesorter({
+            debug: true
+         });
+
+      });
+
+   </script>
 </body>
 <!--
 <script src="../../public/javascripts/table_sort.js"></script>
 -->
 
-<script>
+<!--<script>
    $(document).ready(function() {
-      $("#food_header").click(function() {
+      
+      $("#ItemTable").tablesorter({
+         headers: {
+            4: {
+               sorter: false
+            }
+         }
+      });
+      /*$("#food_header").click(function() {
          sortTable(0, "ItemTable");
       });
       $("#comments_header").click(function() {
@@ -60,7 +100,7 @@
       });
       $("#price_header").click(function() {
          sortTable(3, "ItemTable");
-      });
+      });*/
    });
 
    function sortTable(n, s) {
@@ -121,4 +161,4 @@
       }
    }
 
-</script>
+</script>-->
