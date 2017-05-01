@@ -11,6 +11,7 @@
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
    <script src="/javascripts/register.js"></script>
    <link rel="stylesheet" href="/stylesheets/bootstrap_style.css" />
 </head>
@@ -25,7 +26,7 @@
    <div class="container">
       <div class="row">
          <div class="col-md-6 col-md-push-3">
-            <form class="form-horizontal">
+            <form id="register_form" class="form-horizontal">
                <div class="form-group">
                   <label class="control-label col-sm-6" for="name">Name:</label>
                   <div class="col-sm-6">
@@ -35,19 +36,19 @@
                <div class="form-group">
                   <label class="control-label col-sm-6" for="email">Email:</label>
                   <div class="col-sm-6">
-                     <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                     <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                   </div>
                </div>
                <div class="form-group">
                   <label class="control-label col-sm-6" for="phone_number">Phone Number:</label>
                   <div class="col-sm-6">
-                     <input type="phone" class="form-control" name="phone_number" id="phone_number" placeholder="(xxx)-xxx-xxxx">
+                     <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="(xxx)-xxx-xxxx">
                   </div>
                </div>
                <div class="form-group">
                   <label class="control-label col-sm-6" for="password">Create a Password:</label>
                   <div class="col-sm-6">
-                     <input type="password" class="form-control" name="password" id="password" placeholder="********">
+                     <input type="password" class="form-control" name="password" id="password" placeholder="********" required>
                   </div>
                </div>
                <div class="col-sm-1 col-sm-push-5">
@@ -59,6 +60,42 @@
 
    </div>
 
+   <script>
+      $(document).ready(function() {
+   var register_form = $("#register_form");
+   register_form.validate({
+      rules: {
+         field: {
+            required: true
+         }
+      }
+   });
+         $("#password").rules("add", {
+            minlength: 3
+         });
+         
+         $("#submit").click(function() {
+        if (register_form.valid() === true) {
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                data: {
+                    name: $("#name").val(),
+                    phone: $("#phone_number").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                },
+                success: function(data) {
+                    window.location = "/dashboard";
+                },
+                error: function(data) {
+                    alert("Invalid data. Please try again.");
+                }
+            });
+        }
+    });
+});
+   </script>
 </body>
 
 </html>

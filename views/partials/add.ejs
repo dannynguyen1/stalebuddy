@@ -1,53 +1,82 @@
-<style>
-.alert-added {
-	display: none;
-}
-.form-group {
-  padding-bottom: 50px;
-  margin-bottom: 0px;
-}
-</style>
-<script src="/javascripts/dashboard.js"></script>
-<div class="text-center addItem">
-	<div class="alert-added alert alert-success hide" role="alert">
-		<strong>Nice!</strong> The item was added to your grocery list.
-	</div>
-	<div class="juiceImage">
-		<img height="200px" src=""/>
-	</div>
-	<h1 class="text-center">Add a grocery item</h1>
-	<br/>
-	<form class="form-horizontal">
-		<div class="form-group">
-			<label class="control-label col-sm-12 col-md-5" for="Product">Product Name:</label>
-			<div class="col-sm-12 col-md-3">
-				<input type="text" id="product" class="form-control" placeholder="">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-12 col-md-5" for="expiration_date">Expiration Date:</label>
-			<div class="col-sm-12 col-md-3">
-				<input type="text" id="expiration" class="form-control" placeholder="">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-12 col-md-5" for="Price">Comments (optional):</label>
-			<div class="col-sm-12 col-md-3">
-				<input type="text" id="comments" class="form-control" placeholder="">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-12 col-md-5" for="Comments">Price:</label>
-			 <div class="input-group col-sm-12 col-md-3 mb-2">
-			    <div class="input-group-addon">$</div>
-			    <input type="number" class="form-control" id="price" placeholder="0.00">
-			  </div>
-		</div>
-		<div class="col-sm-12">
-			<button type="button" id="add_button" class="btn btn-success">Add Item</button>
-			<button id="scanItem" class="scanItem btn btn-success" type="button"><i class="glyphicon glyphicon-camera"></i> &nbsp; Scan Item</button>
-		</div>
-		<br/><br/><br/>
-		<div id="camera"></div>
-	</form>
-</div>
+<head>
+   <style>
+      .alert-added {
+         display: none;
+      }
+      
+      .form-group {
+         padding-bottom: 50px;
+         margin-bottom: 0px;
+      }
+
+   </style>
+   <script src="/javascripts/dashboard.js"></script>
+   <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.js"></script>
+</head>
+
+<body>
+   <div class="text-center addItem">
+      <div class="alert-added alert alert-success hide" role="alert">
+         <strong>Nice!</strong> The item was added to your grocery list.
+      </div>
+      <div class="juiceImage">
+         <img height="200px" src="" />
+      </div>
+      <h1 class="text-center">Add a grocery item</h1>
+      <br/>
+      <div id='Error_message'>
+         <strong>Please fill out all required fields.</strong>
+      </div>
+      <form id="ItemForm" class="form-horizontal">
+         <div class="form-group">
+            <label class="control-label col-sm-12 col-md-5" for="Product">Product Name:</label>
+            <div class="col-sm-12 col-md-3">
+               <input type="text" id="product" class="form-control" placeholder="" required>
+            </div>
+         </div>
+         <br>
+         <div class="form-group">
+            <label class="control-label col-sm-12 col-md-5" for="expiration_date">Expiration Date:</label>
+            <div class="col-sm-12 col-md-3">
+               <input type="date" id="expiration" class="form-control" placeholder="" required>
+            </div>
+         </div>
+         <br>
+         <div class="form-group">
+            <label class="control-label col-sm-12 col-md-5" for="Price">Comments (optional):</label>
+            <div class="col-sm-12 col-md-3">
+               <input type="text" id="comments" class="form-control" placeholder="">
+            </div>
+         </div>
+         <br>
+         <div class="form-group">
+            <label class="control-label col-sm-12 col-md-5" for="Comments">Price:</label>
+            <div class="input-group col-sm-12 col-md-3 mb-2">
+               <div style="max-height:2px" class="input-group-addon">$</div>
+               <input type="number" class="form-control" id="price" placeholder="0.00" required>
+            </div>
+         </div>
+         <div class="col-sm-12">
+            <button type="button" id="add_button" class="btn btn-success">Add Item</button>
+            <button id="scanItem" class="scanItem btn btn-success" type="button"><i class="glyphicon glyphicon-camera"></i> &nbsp; Scan Item</button>
+         </div>
+         <br/><br/><br/>
+         <div id="camera"></div>
+      </form>
+   </div>
+   <script>
+      $(document).ready(function() {
+         $("#Error_message").hide();
+         var form = $("#ItemForm");
+         form.validate({
+            rules: {
+               field: {
+                  required: true,
+                  date: true
+               }
+            }
+         });
+      })
+
+   </script>
+</body>

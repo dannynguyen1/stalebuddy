@@ -3,22 +3,27 @@ $(document).ready(function(e) {
         if ($("#product").val() == "" ||
             $("#expiration").val() == "" ||
             $("#price").val() == "") {
-            alert("Please fill out all form items.");
-        } else {
+           $("#Error_message").show();
+        } else if ($("#ItemForm").valid() === true){
+           var date_holder = new Date($("#expiration").val());
+           date_holder.setDate = (date_holder.getDate() + 1);
+           
             $.ajax({
                 type: "POST",
                 url: "/addItem",
                 data: {
                     product: $("#product").val(),
-                    expiration: $("#expiration").val(),
+                    expiration: date_holder.toLocaleDateString(),
                     comments: $("#comments").val(),
-                    price: $("#price").val()
+                   /*Credit to Rounding Decimals: http://stackoverflow.com/a/6134070*/
+                    price: parseFloat(Math.round(($("#price").val()) * 100) / 100).toFixed(2)
                 },
                 success: function(data) {
+                   $("#Error_message").hide();
                     location.reload(true);
                 },
                 error: function(data) {
-                    alert("Invalid data. Please try again.");
+                     $("#Error_message").show();
                 }
             });
         }

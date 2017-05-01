@@ -1,35 +1,164 @@
-<style>
-   #ItemTable {
-      background-color: transparent;
-   }
-   h1 {
-      color: white;
+<head>
+   <script src="https://use.fontawesome.com/1b82322039.js"></script>
+   <style>
+      #ItemTable {
+         background-color: transparent;
+      }
+      
+      h1 {
+         color: white;
+      }
+      
+      h1 span {
+         color: #29a468;
+      }
+
+   </style>
+   <style>
+      table.tablesorter thead tr .header {
+        background-image: url(http://i.imgur.com/IqMYvF6.gif);
+         background-repeat: no-repeat;
+         background-position: center right;
+         cursor: pointer;
+      }
+      
+      table.tablesorter thead tr .headerSortUp {
+         background-image: url(http://i.imgur.com/9cg7VQm.gif);
+      }
+      
+      table.tablesorter thead tr .headerSortDown {
+         background-image: url(http://i.imgur.com/CkKL2tz.gif);
+      }
+
+   </style>
+   <!--<link rel="stylesheet" type="text/css" href="../../public/stylesheets/themes/blue/style.css"/>-->
+   <script src="https://use.fontawesome.com/1b82322039.js"></script>
+   <script src="https://cdn.rawgit.com/christianbach/tablesorter/77457630/jquery.tablesorter.js"></script>
+</head>
+
+
+<body>
+   <table id="ItemTable" class="table table-inverse tablesorter">
+      <thead id="ItemTableHead">
+         <tr>
+            <th id="food_header">Product</th>
+            <th id="expiration_header">Expiration Date</th>
+            <th id="comments_header">Comments</th>
+            <th id="price_header">Price</th>
+         </tr>
+      </thead>
+      <tbody id="ItemTableBody">
+         <% grocery_list.forEach(function(item, index) { %>
+            <tr class="item">
+               <td>
+                  <%= item.product %>
+               </td>
+               <td>
+                  <%= item.expiration %>
+               </td>
+               <td>
+                  <%= item.comments %>
+               </td>
+               <td>$
+                  <%= item.price %>
+               </td>
+               <td><a href="/delete/<%= index %>" data-id="@item.Id" class="linkdelete"><i class="fa fa-trash-o"></i></a></td>
+            </tr>
+            <% }); %>
+      </tbody>
+   </table>
+
+   <script>
+      $(document).ready(function() {
+         $("#ItemTable").tablesorter({
+            debug: true
+         });
+
+      });
+
+   </script>
+</body>
+<!--
+<script src="../../public/javascripts/table_sort.js"></script>
+-->
+
+<!--<script>
+   $(document).ready(function() {
+      
+      $("#ItemTable").tablesorter({
+         headers: {
+            4: {
+               sorter: false
+            }
+         }
+      });
+      /*$("#food_header").click(function() {
+         sortTable(0, "ItemTable");
+      });
+      $("#comments_header").click(function() {
+         sortTable(2, "ItemTable");
+      });
+      $("#price_header").click(function() {
+         sortTable(3, "ItemTable");
+      });*/
+   });
+
+   function sortTable(n, s) {
+      /*Got this function from W3Schools: https://www.w3schools.com/howto/howto_js_sort_table.asp*/
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById(s);
+      switching = true;
+      //Set the sorting direction to ascending:
+      dir = "asc";
+      /*Make a loop that will continue until
+      no switching has been done:*/
+      while (switching) {
+         //start by saying: no switching is done:
+         switching = false;
+         rows = table.getElementsByTagName("TR");
+         /*Loop through all table rows (except the
+         first, which contains table headers):*/
+         for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            var z = x.innerHTML.localeCompare(y.innerHTML);
+            //alert("local compare is: " + z);
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+               if (z > 0) {
+                  //if so, mark as a switch and break the loop:
+                  shouldSwitch = true;
+                  break;
+               }
+            } else if (dir == "desc") {
+               if (z < 0) {
+                  //if so, mark as a switch and break the loop:
+                  shouldSwitch = true;
+                  break;
+               }
+            }
+         }
+         if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount++;
+         } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+               dir = "desc";
+               switching = true;
+            }
+         }
+      }
    }
 
-   h1 span {
-      color: #29a468;
-   }
-</style>
-<script src="https://use.fontawesome.com/1b82322039.js"></script>
-<table id="ItemTable" class="table table-inverse">
-   <thead id="ItemTableHead">
-      <tr>
-         <th>Product</th>
-         <th>Expiration Date</th>
-         <th>Comments</th>
-         <th>Price</th>
-      </tr>
-   </thead>
-   <tbody id="ItemTableBody">
-      <% grocery_list.forEach(function(item, index) { %>
-         <tr class="item">
-            <td><%= item.product %></td>
-            <td><%= item.expiration %></td>
-            <td><%= item.comments %></td>
-            <td>$<%= item.price %></td>
-            <td><a href="/delete/<%= index %>" data-id="@item.Id" class="linkdelete"><i class="fa fa-trash-o"></i></a></td>
-         </tr>
-      <% }); %>
-   </tbody>
-</table>
-<h1>Total Price: <span>$<%= totalPrice %></span></h1>
+</script>-->

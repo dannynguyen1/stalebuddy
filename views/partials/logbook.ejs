@@ -1,3 +1,4 @@
+<head>
 <style>
    #LogBook {
       background-color: transparent;
@@ -7,11 +8,30 @@
    }
 
 </style>
+   <style>
+      table.tablesorter thead tr .header {
+        background-image: url(http://i.imgur.com/IqMYvF6.gif);
+         background-repeat: no-repeat;
+         background-position: center right;
+         cursor: pointer;
+      }
+      
+      table.tablesorter thead tr .headerSortUp {
+         background-image: url(http://i.imgur.com/9cg7VQm.gif);
+      }
+      
+      table.tablesorter thead tr .headerSortDown {
+         background-image: url(http://i.imgur.com/CkKL2tz.gif);
+      }
+
+   </style>
 <script src="https://use.fontawesome.com/1b82322039.js"></script>
+</head>
+<body>
 <div>
    <h1>LOGBOOK</h1>
 </div>
-<table id="LogBook" class="table table-inverse">
+<table id="LogBook" class="table table-inverse tablesorter">
    <thead id="LogBookHead">
       <tr>
          <th>Product</th>
@@ -41,14 +61,19 @@
    </tbody>
 </table>
 
+   
 <script>
    $(document).ready(function() {
+      $("#LogBook").tablesorter({
+            debug: true
+         });
       var cost;
 
       cost = getCost();
 
-      $("#LogBook").before("<div id='cost'><h4>Total Cost: $" + cost.toFixed(2) + "</h4></div>");
+      $("#LogBook").before("<div id='cost'><h4>Total Cost: <span id='number_price'>$" + cost.toFixed(2) + "<span></h4></div>");
       $("#cost").css("color", "white");
+      $("#number_price").css("color", "#29a468");
    });
 
    function getCost() {
@@ -64,3 +89,4 @@
    }
 
 </script>
+</body>
