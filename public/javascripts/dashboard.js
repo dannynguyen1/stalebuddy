@@ -5,6 +5,7 @@ $(document).ready(function(e) {
             $("#price").val() == "") {
            $("#Error_message").show();
         } else if ($("#ItemForm").valid() === true){
+           //Change the object Date into an easily-readable string.
            var date_holder = new Date($("#expiration").val());
            date_holder.setDate = (date_holder.getDate() + 1);
            
