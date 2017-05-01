@@ -1,11 +1,15 @@
 $(document).ready(function() {
-    $("#submit").click(function() {
-        if ($("#email").val() == ""
-            || $("#password").val() == ""
-            || $("#name").val() == ""
-            || $("#phone_number").val() == ""){
-            alert("Please fill out all form items.");
-        }else {
+/*   var register_form = $("#register_form");
+   register_form.validate({
+      rules: {
+         field: {
+            required: true
+         }
+      }
+   });*/
+   
+    /*$("#submit").click(function() {
+        if (register_form.valid() === true) {
             $.ajax({
                 type: "POST",
                 url: "/register",
@@ -22,6 +26,8 @@ $(document).ready(function() {
                     alert("Invalid data. Please try again.");
                 }
             });
+        } else {
+           alert("Error!");
         }
-    });
-})
+    });*/
+});
