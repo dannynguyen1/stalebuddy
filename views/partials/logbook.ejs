@@ -1,91 +1,90 @@
 <head>
-<style>
-   #LogBook {
-      background-color: transparent;
-   }
-   h1 {
-      color: white;
-   }
-
-</style>
    <style>
+      #LogBook {
+         background-color: transparent;
+      }
+      
+      h1 {
+         color: white;
+      }
+      
       table.tablesorter thead tr .header {
-        background-image: url(http://i.imgur.com/IqMYvF6.gif);
+         background-image: url(https://raw.githubusercontent.com/Denzel-Pierre/stalebuddy/master/public/images/bg-white.gif);
          background-repeat: no-repeat;
          background-position: center right;
          cursor: pointer;
       }
       
       table.tablesorter thead tr .headerSortUp {
-         background-image: url(http://i.imgur.com/9cg7VQm.gif);
+         background-image: url(https://raw.githubusercontent.com/Denzel-Pierre/stalebuddy/master/public/images/asc-white.gif);
       }
       
       table.tablesorter thead tr .headerSortDown {
-         background-image: url(http://i.imgur.com/CkKL2tz.gif);
+         background-image: url(https://raw.githubusercontent.com/Denzel-Pierre/stalebuddy/master/public/images/desc-white.gif);
       }
 
    </style>
-<script src="https://use.fontawesome.com/1b82322039.js"></script>
 </head>
-<body>
-<div>
-   <h1>LOGBOOK</h1>
-</div>
-<table id="LogBook" class="table table-inverse tablesorter">
-   <thead id="LogBookHead">
-      <tr>
-         <th>Product</th>
-         <th>Expiration Date</th>
-         <th>Comments</th>
-         <th>Price</th>
-      </tr>
-   </thead>
-   <tbody id="LogBookBody">
-      <% grocery_list.forEach(function(item) { %>
-         <tr class="item">
-            <td>
-               <%= item.product %>
-            </td>
-            <td>
-               <%= item.expiration %>
-            </td>
-            <td>
-               <%= item.comments %>
-            </td>
-            <td>$
-               <%= item.price %>
-            </td>
-         </tr>
-         <% }); %>
-   </tbody>
-</table>
 
-   
-<script>
-   $(document).ready(function() {
-      $("#LogBook").tablesorter({
+<body>
+   <div>
+      <h1>LOGBOOK</h1>
+   </div>
+   <table id="LogBook" class="table table-inverse tablesorter">
+      <thead id="LogBookHead">
+         <tr>
+            <th>Product</th>
+            <th>Expiration Date</th>
+            <th>Comments</th>
+            <th>Price</th>
+         </tr>
+      </thead>
+      <tbody id="LogBookBody">
+         <% grocery_list.forEach(function(item) { %>
+            <tr class="item">
+               <td>
+                  <%= item.product %>
+               </td>
+               <td>
+                  <%= item.expiration %>
+               </td>
+               <td>
+                  <%= item.comments %>
+               </td>
+               <td>$
+                  <%= item.price %>
+               </td>
+            </tr>
+            <% }); %>
+      </tbody>
+   </table>
+
+
+   <script>
+      $(document).ready(function() {
+         $("#LogBook").tablesorter({
             debug: true
          });
-      var cost;
+         var cost;
 
-      cost = getCost();
+         cost = getCost();
 
-      $("#LogBook").before("<div id='cost'><h4>Total Cost: <span id='number_price'>$" + cost.toFixed(2) + "<span></h4></div>");
-      $("#cost").css("color", "white");
-      $("#number_price").css("color", "#29a468");
-   });
-
-   function getCost() {
-      var cost_holder = 0.00;
-      $("#LogBookBody > tr").each(function() {
-         var data = $(this).children().eq(3).html();
-         var data_int = 0;
-         data = data.substr(1);
-         data_int = parseFloat(data);
-         cost_holder = (cost_holder + data_int);
+         $("#LogBook").before("<div id='cost'><h4>Total Cost: <span id='number_price'>$" + cost.toFixed(2) + "<span></h4></div>");
+         $("#cost").css("color", "white");
+         $("#number_price").css("color", "#29a468");
       });
-      return cost_holder;
-   }
 
-</script>
+      function getCost() {
+         var cost_holder = 0.00;
+         $("#LogBookBody > tr").each(function() {
+            var data = $(this).children().eq(3).html();
+            var data_int = 0;
+            data = data.substr(1);
+            data_int = parseFloat(data);
+            cost_holder = (cost_holder + data_int);
+         });
+         return cost_holder;
+      }
+
+   </script>
 </body>
