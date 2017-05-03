@@ -28,7 +28,7 @@
          <div class="col-md-6 col-md-push-3">
             <form id="register_form" class="form-horizontal">
                <div class="form-group">
-                  <label class="control-label col-sm-6" for="name">Name:</label>
+                  <label class="control-label col-sm-6" for="name">Name (Optional):</label>
                   <div class="col-sm-6">
                      <input type="text" class="form-control" name="name" id="name" placeholder="Your name">
                   </div>
@@ -40,7 +40,7 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label class="control-label col-sm-6" for="phone_number">Phone Number:</label>
+                  <label class="control-label col-sm-6" for="phone_number">Phone Number (Optional):</label>
                   <div class="col-sm-6">
                      <input type="tel" class="form-control" name="phone_number" id="phone_number" placeholder="(xxx)-xxx-xxxx">
                   </div>
@@ -62,39 +62,40 @@
 
    <script>
       $(document).ready(function() {
-   var register_form = $("#register_form");
-   register_form.validate({
-      rules: {
-         field: {
-            required: true
-         }
-      }
-   });
+         var register_form = $("#register_form");
+         register_form.validate({
+            rules: {
+               field: {
+                  required: true
+               }
+            }
+         });
          $("#password").rules("add", {
             minlength: 3
          });
-         
+
          $("#submit").click(function() {
-        if (register_form.valid() === true) {
-            $.ajax({
-                type: "POST",
-                url: "/register",
-                data: {
-                    name: $("#name").val(),
-                    phone: $("#phone_number").val(),
-                    email: $("#email").val(),
-                    password: $("#password").val()
-                },
-                success: function(data) {
-                    window.location = "/dashboard";
-                },
-                error: function(data) {
-                    alert("Invalid data. Please try again.");
-                }
-            });
-        }
-    });
-});
+            if (register_form.valid() === true) {
+               $.ajax({
+                  type: "POST",
+                  url: "/register",
+                  data: {
+                     name: $("#name").val(),
+                     phone: $("#phone_number").val(),
+                     email: $("#email").val(),
+                     password: $("#password").val()
+                  },
+                  success: function(data) {
+                     window.location = "/dashboard";
+                  },
+                  error: function(data) {
+                     alert("Invalid data. Please try again.");
+                  }
+               });
+            }
+         });
+      });
+
    </script>
 </body>
 
